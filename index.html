@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>2048</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="game.js"></script>
+
+<script>
+    var game;
+    let gridSize = 4
+    window.onload = function () {
+        game = new Game(4);
+        game.onMove(moveCallback)
+        game.onLose(loseCallback)
+        var gameState = game.getGameState()
+        renderGameState(gameState)
+
+        document.getElementById("newGame").onclick = function newGameFN() {
+            game = new Game(4);
+            //game.onMove(moveCallback)
+            var gameState = game.getGameState()
+            renderGameState(gameState)
+        }
+    }
+    //render gamestate fn
+    function renderGameState(gameState) {
+        for (var i = 0; i < (gridSize * gridSize); i++) {
+            var cellId = "#cell" + i
+            $(cellId).text(gameState.board[i])
+        }
+        $("#scoreKeeper").text(gameState.score)
+
+        // if (gameState.over == true) {
+        //     $("#youLose").text("Gamer over! Start a new game")
+        // }
+    }
+    document.addEventListener("keydown", keydownHandler, false);
+
+    function keydownHandler(e) {
+        var keyCode = e.keyCode;
+        var gameState = game.getGameState()
+        if (keyCode === 40) {
+            game.move("down")
+        }
+        if (keyCode === 39) {
+            game.move("right")
+        }
+        if (keyCode === 38) {
+            game.move("up")
+        }
+        if (keyCode === 37) {
+            game.move("left")
+        }
+    }
+    
+    function moveCallback() {
+        var gameState = game.getGameState()
+        renderGameState(gameState)
+    }
+
+    function loseCallback() {
+        var gameState = game.getGameState()
+        if (gameState.over === true) {
+            $("#youLose").text("Gamer over! Start a new game")
+        }
+    }
+
+</script>
+
+<body>
+    <!-- <div id="root"></div> -->
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <style>
+            .button {
+                background-color: #DCDCDC;
+                border: none;
+                border-radius: 8px;
+                color: black;
+                padding: 40px;
+                text-align: center;
+                font-size: 22px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+
+            .grid-container {
+                display: grid;
+                grid-template-columns: 200px 200px 200px 200px;
+                background-color: #FFC2CD;
+                justify-content: center;
+                padding: 150px;
+                position: relative;
+            }
+
+            .grid-item {
+                background-color: rgba(255, 255, 255, 0.8);
+                border: 1px solid rgba(0, 0, 0, 0.8);
+                padding: 20px;
+                font-size: 30px;
+                text-align: center;
+            }
+
+            h1 {
+                text-align: center
+            }
+
+            .center1 {
+                margin: 0;
+                position: absolute; top: 495px; left: 960px;
+                padding: 20px;
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <h1 style="font-size:30px">Welcome to 2048!</h1>
+
+        <div class="grid-container">
+            <div class="grid-item" id="cell0">1</div>
+            <div class="grid-item" id="cell1">2</div>
+            <div class="grid-item" id="cell2">3</div>
+            <div class="grid-item" id="cell3">4</div>
+            <div class="grid-item" id="cell4">5</div>
+            <div class="grid-item" id="cell5">6</div>
+            <div class="grid-item" id="cell6">7</div>
+            <div class="grid-item" id="cell7">8</div>
+            <div class="grid-item" id="cell8">9</div>
+            <div class="grid-item" id="cell9">10</div>
+            <div class="grid-item" id="cell10">11</div>
+            <div class="grid-item" id="cell11">12</div>
+            <div class="grid-item" id="cell12">13</div>
+            <div class="grid-item" id="cell13">14</div>
+            <div class="grid-item" id="cell14">15</div>
+            <div class="grid-item" id="cell15">16</div>
+
+            <div class="center1">
+                <button class="button button1" id="newGame">New Game</button>
+            </div>  
+
+            <div class="center2" style="position:absolute; top:140px; right:450px;">
+                <p style="font-size:26px"><b>Your Score: </b></p>
+                <p style="font-size:20px" id="scoreKeeper">hi</p>
+            </div>
+
+
+           <div class="center">
+                <p style="font-size:30px" id="youLose"><b></b></p>
+            </div>
+
+            <div class="center">
+                <p style="font-size:30px"><b></b></p>
+            </div> 
+
+        </div>
+
+    </body>
+
+    </html>
+
+</body>
+
+</html>
